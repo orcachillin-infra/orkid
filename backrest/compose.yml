@@ -1,7 +1,6 @@
 services:
   backrest:
     build: .
-    image: orkid/backrest:1.14.1-sqlite
     container_name: backrest
     hostname: orkid
     restart: unless-stopped
