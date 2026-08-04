@@ -7,8 +7,8 @@ The authenticated UI is available at `https://backups.orcachill.in`.
 ## Initial Setup
 
 1. Create the Backrest administrator account on first launch.
-2. Populate `/etc/komodo/secrets/backrest.env` from Infisical with `B2_ACCOUNT_ID`, `B2_ACCOUNT_KEY`, and `RESTIC_PASSWORD`.
-3. Add a repository using `b2:<bucket>/orkid`. Leave the repository password blank so Backrest uses `RESTIC_PASSWORD` from its environment.
+2. Verify the Infisical Agent rendered `/var/lib/infisical-agent/rendered/backrest/backrest.env` with `B2_BUCKET`, `B2_ACCOUNT_ID`, `B2_ACCOUNT_KEY`, and `RESTIC_PASSWORD`.
+3. Add a repository using `b2:<B2_BUCKET>:orkid`. Leave the repository password blank so Backrest uses `RESTIC_PASSWORD` from its environment.
 4. Add a plan for `/staging/current`.
 5. Add `/hooks/prepare-snapshot.sh` as a `CONDITION_SNAPSHOT_START` command hook with `ON_ERROR_FATAL`.
 

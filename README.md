@@ -15,7 +15,7 @@ Runtime data and secrets are deliberately kept outside this repository:
 - AIOStreams data: `/var/lib/aiostreams/data`
 - AIOStreams environment: `/etc/komodo/secrets/aiostreams.env`
 - Backrest state and staging: `/var/lib/backrest`
-- Backrest storage credentials: `/etc/komodo/secrets/backrest.env`
+- Backrest storage credentials: `/var/lib/infisical-agent/rendered/backrest/backrest.env`
 - Prowlarr data: `/var/lib/prowlarr/config`
 
 The AIOStreams environment file must be mode `600` and owned by root. Public ports are bound only to Orkid's NetBird address.

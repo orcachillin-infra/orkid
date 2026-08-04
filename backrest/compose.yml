@@ -5,7 +5,7 @@ services:
     hostname: orkid
     restart: unless-stopped
     env_file:
-      - /etc/komodo/secrets/backrest.env
+      - /var/lib/infisical-agent/rendered/backrest/backrest.env
     environment:
       BACKREST_DATA: /data
       BACKREST_CONFIG: /config/config.json

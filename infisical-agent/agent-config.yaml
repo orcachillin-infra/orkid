@@ -1,0 +1,19 @@
+infisical:
+  address: "https://vault.orcachill.in"
+
+auth:
+  type: "universal-auth"
+  config:
+    client-id: "/etc/infisical-agent/client-id"
+    client-secret: "/etc/infisical-agent/client-secret"
+    remove_client_secret_on_read: false
+
+templates:
+  - destination-path: "/var/lib/infisical-agent/rendered/backrest/backrest.env"
+    template-content: |
+      {{ with getSecretByName "278b780d-2529-400d-8c7b-925d03a1db77" "prod" "/backrest" "B2_BUCKET" }}B2_BUCKET='{{ .Value }}'{{ end }}
+      {{ with getSecretByName "278b780d-2529-400d-8c7b-925d03a1db77" "prod" "/backrest" "B2_ACCOUNT_ID" }}B2_ACCOUNT_ID='{{ .Value }}'{{ end }}
+      {{ with getSecretByName "278b780d-2529-400d-8c7b-925d03a1db77" "prod" "/backrest" "B2_ACCOUNT_KEY" }}B2_ACCOUNT_KEY='{{ .Value }}'{{ end }}
+      {{ with getSecretByName "278b780d-2529-400d-8c7b-925d03a1db77" "prod" "/backrest" "RESTIC_PASSWORD" }}RESTIC_PASSWORD='{{ .Value }}'{{ end }}
+    config:
+      polling-interval: 60s
