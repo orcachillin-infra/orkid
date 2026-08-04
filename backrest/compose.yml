@@ -1,0 +1,33 @@
+services:
+  backrest:
+    build: .
+    image: orkid/backrest:1.14.1-sqlite
+    container_name: backrest
+    hostname: orkid
+    restart: unless-stopped
+    env_file:
+      - /etc/komodo/secrets/backrest.env
+    environment:
+      BACKREST_DATA: /data
+      BACKREST_CONFIG: /config/config.json
+      XDG_CACHE_HOME: /cache
+      TMPDIR: /tmp
+      TZ: America/Pacific
+    ports:
+      - "100.114.67.239:9898:9898"
+    volumes:
+      - /var/lib/backrest/data:/data
+      - /var/lib/backrest/config:/config
+      - /var/lib/backrest/cache:/cache
+      - /var/lib/backrest/tmp:/tmp
+      - /var/lib/backrest/staging:/staging
+      - /var/lib/aiostreams/data:/sources/aiostreams
+      - /var/lib/prowlarr/config:/sources/prowlarr
+      - /etc/komodo/secrets:/sources/komodo-secrets:ro
+      - ./prepare-snapshot.sh:/hooks/prepare-snapshot.sh:ro
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://127.0.0.1:9898/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
