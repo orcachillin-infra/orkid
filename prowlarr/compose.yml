@@ -1,0 +1,20 @@
+services:
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr@sha256:4fd7a166c8f46dd3370a871c250ee577d6c2ae97a0dbe0e3614b5ef736205620
+    container_name: prowlarr
+    restart: unless-stopped
+    environment:
+      PUID: "1000"
+      PGID: "1000"
+      TZ: America/Pacific
+    ports:
+      - "100.114.67.239:9696:9696"
+    volumes:
+      - /var/lib/prowlarr/config:/config
+
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr@sha256:139dfee1c6f89249c8d665d1333a42e8ec74ec0a86bc6bb1c8461e10d3a66a47
+    container_name: flaresolverr
+    restart: unless-stopped
+    environment:
+      TZ: America/Pacific

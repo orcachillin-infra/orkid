@@ -1,0 +1,15 @@
+services:
+  aiostreams:
+    image: ghcr.io/viren070/aiostreams@sha256:26d93653c3a5d0835db9189d6aca21d05614e68107c4d4a3ec7196b60c88c3bc
+    container_name: aiostreams
+    restart: unless-stopped
+    entrypoint:
+      - /nodejs/bin/node
+      - /opt/aiostreams/load-env.cjs
+    command: []
+    ports:
+      - "100.114.67.239:3600:3000"
+    volumes:
+      - /var/lib/aiostreams/data:/app/data
+      - /etc/komodo/secrets/aiostreams.env:/run/secrets/aiostreams.env:ro
+      - ./load-env.cjs:/opt/aiostreams/load-env.cjs:ro
