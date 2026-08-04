@@ -2,7 +2,7 @@
 
 Backrest `v1.14.1` with SQLite tooling for application-consistent snapshots.
 
-The UI is available only over NetBird at `http://orkid.network.orcachill.in:9898`.
+The authenticated UI is available at `https://backups.orcachill.in`.
 
 ## Initial Setup
 
