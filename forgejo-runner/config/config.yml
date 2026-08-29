@@ -14,7 +14,7 @@ container:
   options:
   workdir_parent:
   valid_volumes: []
-  docker_host: "-"
+  docker_host: "unix:///run/podman/podman.sock"
 
 host:
   workdir_parent:
