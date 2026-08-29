@@ -19,7 +19,6 @@ services:
       - FORGEJO__security__INSTALL_LOCK=true
       - FORGEJO__actions__ENABLED=true
       - FORGEJO__packages__LIMIT_SIZE=-1
-      - FORGEJO__packages__LIMIT_SIZE=-1
       - FORGEJO__oauth2__ENABLE=true
     ports:
       - "100.114.67.239:3000:3000"
