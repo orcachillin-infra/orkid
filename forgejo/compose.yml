@@ -10,7 +10,7 @@ services:
       - FORGEJO__server__ROOT_URL=https://git.orcachill.in
       - FORGEJO__server__HTTP_ADDR=0.0.0.0
       - FORGEJO__server__HTTP_PORT=3000
-      - FORGEJO__server__SSH_DOMAIN=orkid.network.orcachill.in
+      - FORGEJO__server__SSH_DOMAIN=git.orcachill.in
       - FORGEJO__server__START_SSH_SERVER=true
       - FORGEJO__server__SSH_PORT=2222
       - FORGEJO__server__SSH_LISTEN_PORT=2222
