@@ -1,0 +1,14 @@
+services:
+  forgejo-runner:
+    image: data.forgejo.org/forgejo/runner:13.0.0@sha256:543844e69cc3eb56f19167d6389b637d93d25c6bc4c1af890f4af0b5b15cf528
+    container_name: forgejo-runner
+    restart: unless-stopped
+    user: 1000:1000
+    environment:
+      - DOCKER_HOST=unix:///var/run/docker.sock
+    volumes:
+      - /var/lib/forgejo-runner:/data
+      - /etc/komodo/repos/infra-orkid/forgejo-runner/config/config.yml:/config.yml:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: forgejo-runner --config /config.yml daemon
+    depends_on: []
