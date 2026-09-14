@@ -1,0 +1,10 @@
+services:
+  radicale:
+    image: docker.io/tomsquest/docker-radicale@sha256:01ed22b5314436ed008f52b885ec3043573f970c51f120f0a0edd54b4ffee0ac
+    container_name: radicale
+    restart: unless-stopped
+    ports:
+      - "100.114.67.239:5232:5232"
+    volumes:
+      - /var/lib/radicale:/data
+      - ./config:/config:ro

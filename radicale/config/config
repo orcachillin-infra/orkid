@@ -1,0 +1,19 @@
+[server]
+hosts = 0.0.0.0:5232
+
+[auth]
+type = htpasswd
+htpasswd_filename = /config/users
+htpasswd_encryption = bcrypt
+
+[rights]
+type = owner_only
+
+[sharing]
+type = files
+collection_by_token = true
+permit_create_token = true
+default_permissions_create_token = r
+
+[storage]
+filesystem_folder = /data/collections
