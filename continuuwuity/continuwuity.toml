@@ -1,0 +1,14 @@
+[global]
+allow_registration = true
+registration_token = "trans_rights-are!human_rights"
+default_room_version = "12"
+trusted_servers = ["matrix.org"]
+auto_join_rooms = ["#space:thighhighs.gay", "#general:thighhighs.gay", "#announcements:thighhighs.gay"]
+[global.tls]
+[global.well_known]
+client = "https://matrix.thighhighs.gay"
+server = "matrix.thighhighs.gay:443"
+support_role = "m.role.admin"
+support_mxid = "@crf:thighhighs.gay"
+[global.blurhashing]
+[global.ldap]
