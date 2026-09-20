@@ -17,9 +17,12 @@ services:
       - FORGEJO__database__DB_TYPE=sqlite3
       - FORGEJO__database__PATH=/data/forgejo.db
       - FORGEJO__security__INSTALL_LOCK=true
+      - FORGEJO__service__ENABLE_INTERNAL_SIGNIN=false
+      - FORGEJO__service__ENABLE_BASIC_AUTHENTICATION=false
+      - FORGEJO__service__ALLOW_ONLY_EXTERNAL_REGISTRATION=true
       - FORGEJO__actions__ENABLED=true
       - FORGEJO__packages__LIMIT_SIZE=-1
-      - FORGEJO__oauth2__ENABLE=true
+      - FORGEJO__oauth2__ENABLED=true
     ports:
       - "100.114.67.239:3000:3000"
       - "100.114.67.239:2222:2222"
