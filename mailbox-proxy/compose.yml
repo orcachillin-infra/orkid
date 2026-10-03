@@ -1,0 +1,8 @@
+services:
+  proxy:
+    image: docker.io/library/nginx:1.27-alpine
+    restart: unless-stopped
+    ports:
+      - "100.114.67.239:3808:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
