@@ -1,0 +1,13 @@
+services:
+  pmtiles:
+    build: .
+    container_name: pmtiles
+    restart: unless-stopped
+    environment:
+      TZ: America/Pacific
+      PMTILES: /data/wa.pmtiles
+      PORT: "8090"
+    ports:
+      - "100.114.67.239:8090:8090"
+    volumes:
+      - /var/lib/pmtiles:/data:ro
