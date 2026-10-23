@@ -2,7 +2,7 @@ services:
   homeserver:
     image: forgejo.ellis.link/continuwuation/continuwuity:main-maxperf
     container_name: continuuwity-homeserver
-    restart: unless-stopped
+    restart: always
     ports:
       - "100.114.67.239:8448:6167"
     environment:

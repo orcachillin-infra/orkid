@@ -1,7 +1,7 @@
 services:
   frontend:
     image: ghcr.io/maathimself/mailflow-frontend:2.7.0
-    restart: unless-stopped
+    restart: always
     ports:
       - "100.114.67.239:3780:80"
     depends_on:
@@ -18,7 +18,7 @@ services:
 
   backend:
     image: ghcr.io/maathimself/mailflow-backend:2.7.0
-    restart: unless-stopped
+    restart: always
     env_file: .env
     environment:
       NODE_ENV: production
@@ -45,7 +45,7 @@ services:
 
   postgres:
     image: docker.io/library/postgres:16-alpine
-    restart: unless-stopped
+    restart: always
     environment:
       POSTGRES_DB: mailflow
       POSTGRES_USER: mailflow
@@ -63,7 +63,7 @@ services:
 
   redis:
     image: docker.io/library/redis:7-alpine
-    restart: unless-stopped
+    restart: always
     command: redis-server --save 60 1 --loglevel warning
     volumes:
       - redis_data:/data

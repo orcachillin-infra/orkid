@@ -2,7 +2,7 @@ services:
   forgejo:
     image: codeberg.org/forgejo/forgejo:12@sha256:655c4a59e7868c56d573a636c7c71a6875e28bf1f4db3e78c5c19beacf92a2d0
     container_name: forgejo
-    restart: unless-stopped
+    restart: always
     environment:
       - USER_UID=1000
       - USER_GID=1000

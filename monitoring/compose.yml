@@ -2,7 +2,7 @@ services:
   grafana:
     image: docker.io/grafana/grafana:13.1.3@sha256:ab5cb380e3ff3172d6c8bd2e7cfd31cce977d2881b260e1f5bc089bf0b759b43
     container_name: grafana
-    restart: unless-stopped
+    restart: always
     environment:
       GF_SERVER_ROOT_URL: https://grafana.orcachill.in/
     ports:
@@ -19,7 +19,7 @@ services:
   prometheus:
     image: docker.io/prom/prometheus:v3.13.2@sha256:508729e0e2d18e11fd742a5a5ca70e557b940a93948c3c95fd0123a6fd538b69
     container_name: prometheus
-    restart: unless-stopped
+    restart: always
     ports:
       - "100.114.67.239:9090:9090"
     volumes:
@@ -40,6 +40,6 @@ services:
       - --web.listen-address=100.114.67.239:9100
     network_mode: host
     pid: host
-    restart: unless-stopped
+    restart: always
     volumes:
       - /:/host:ro,rslave

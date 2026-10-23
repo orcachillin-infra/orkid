@@ -1,7 +1,7 @@
 services:
   proxy:
     image: docker.io/library/nginx:1.27-alpine
-    restart: unless-stopped
+    restart: always
     ports:
       - "100.114.67.239:3808:80"
     volumes:

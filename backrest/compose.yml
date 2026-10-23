@@ -3,7 +3,7 @@ services:
     build: .
     container_name: backrest
     hostname: orkid
-    restart: unless-stopped
+    restart: always
     env_file:
       - /var/lib/infisical-agent/rendered/backrest/backrest.env
     environment:
