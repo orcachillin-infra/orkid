@@ -1,0 +1,13 @@
+services:
+  pufferpanel:
+    image: docker.io/pufferpanel/pufferpanel:3.0.9
+    container_name: pufferpanel
+    restart: always
+    environment:
+      PUFFER_PLATFORM: docker
+      TZ: America/Los_Angeles
+    ports:
+      - "100.114.67.239:8100:8080"
+    volumes:
+      - /var/lib/pufferpanel:/var/lib/pufferpanel
+      - /run/podman/podman.sock:/var/run/docker.sock
