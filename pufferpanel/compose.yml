@@ -5,6 +5,7 @@ services:
     restart: always
     environment:
       PUFFER_PLATFORM: docker
+      PUFFER_DOCKER_DISALLOWHOST: "false"
       TZ: America/Los_Angeles
     ports:
       - "100.114.67.239:8100:8080"

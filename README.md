@@ -10,6 +10,7 @@ Komodo-managed services running on Orkid.
 - `forgejo`: Forgejo git hosting on the Orkid NetBird address, ports 3000 (web) and 2222 (ssh).
 - `forgejo-runner`: Actions runner for the Forgejo instance, shares the host docker socket.
 - `pufferpanel`: PufferPanel game server panel on the Orkid NetBird address, port 8100. Fronted by `panel.orcachill.in` on dora.
+- `pufferpanel` also hosts a Sub Rosa dedicated server (`rosaserver`), running in `ghcr.io/jpxs-intl/rosaserverdocker:ubuntu` on the host network, game port 27584/udp. Server files live in `/var/lib/pufferpanel/servers/rosaserver`.
 - `prowlarr`: Prowlarr on the Orkid NetBird address, port 9696, with an internal FlareSolverr sidecar.
 
 ## Runtime State
