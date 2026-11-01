@@ -10,4 +10,5 @@ services:
       - "100.114.67.239:8100:8080"
     volumes:
       - /var/lib/pufferpanel:/var/lib/pufferpanel
+      - /var/lib/pufferpanel/panel.json:/etc/pufferpanel/config.json
       - /run/podman/podman.sock:/var/run/docker.sock
