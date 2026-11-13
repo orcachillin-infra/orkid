@@ -9,8 +9,8 @@ Komodo-managed services running on Orkid.
 - `monitoring`: Grafana, Prometheus, and Orkid's node exporter on NetBird-only ports 3100, 9090, and 9100.
 - `forgejo`: Forgejo git hosting on the Orkid NetBird address, ports 3000 (web) and 2222 (ssh).
 - `forgejo-runner`: Actions runner for the Forgejo instance, shares the host docker socket.
-- `pufferpanel`: PufferPanel game server panel on the Orkid NetBird address, port 8100. Fronted by `panel.orcachill.in` on dora.
-- `pufferpanel` also hosts a Sub Rosa dedicated server (`rosaserver`), running in `ghcr.io/jpxs-intl/rosaserverdocker:ubuntu` on the host network, game port 27584/udp. Server files live in `/var/lib/pufferpanel/servers/rosaserver`.
+- `pelican`: Pelican game server panel on the Orkid NetBird address, port 8100, with its own PostgreSQL and Redis. Fronted by `panel.orcachill.in` on dora.
+- `pelican` also runs Wings as a host service (`wings.service`) against a second, dedicated Docker engine, so Podman keeps `/var/run/docker.sock`. The node answers at `wings.orcachill.in:8095` through dora and stores servers in `/var/lib/pelican/volumes`. See `pelican/README.md`.
 - `prowlarr`: Prowlarr on the Orkid NetBird address, port 9696, with an internal FlareSolverr sidecar.
 
 ## Runtime State
@@ -23,7 +23,14 @@ Runtime data and secrets are deliberately kept outside this repository:
 - Backrest storage credentials: `/var/lib/infisical-agent/rendered/backrest/backrest.env`
 - Grafana data: `/var/lib/grafana/data`
 - Prometheus data: `/var/lib/prometheus/data`
-- PufferPanel data and servers: `/var/lib/pufferpanel`
+- Pelican panel data: `/var/lib/pelican/panel`
+- Pelican database: `/var/lib/pelican/database`
+- Pelican Redis data: `/var/lib/pelican/redis`
+- Pelican server volumes: `/var/lib/pelican/volumes`
+- Pelican database credentials: `/etc/komodo/secrets/pelican-db.env`
+- Pelican admin credentials: `/etc/komodo/secrets/pelican-admin.env`
+- Wings configuration: `/etc/pelican/config.yml`
+- Retired PufferPanel data, kept until the migration is signed off: `/var/lib/pufferpanel`
 - Prowlarr data: `/var/lib/prowlarr/config`
 - Forgejo data: `/var/lib/forgejo`
 

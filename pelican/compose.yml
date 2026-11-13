@@ -1,0 +1,41 @@
+services:
+  panel:
+    image: ghcr.io/pelican/panel@sha256:2665875fa17956708983b57c8be97983440b0ed03524de5184d2f2ed0ee24abf
+    container_name: pelican-panel
+    sysctls:
+      net.ipv4.ip_unprivileged_port_start: 0
+    restart: always
+    depends_on:
+      - database
+      - redis
+    environment:
+      XDG_DATA_HOME: /pelican-data
+      APP_URL: https://panel.orcachill.in
+      BEHIND_PROXY: "true"
+      TRUSTED_PROXIES: "100.114.199.14"
+      ADMIN_EMAIL: max@orcachill.in
+      TZ: America/Los_Angeles
+    ports:
+      - "100.114.67.239:8100:80"
+    volumes:
+      - /var/lib/pelican/panel:/pelican-data
+      - /var/lib/pelican/logs:/var/www/html/storage/logs
+
+  database:
+    image: docker.io/library/postgres@sha256:1018733457011bf88d81db98cf43aac6d5150afc18787dbe204771fedf80ff95
+    container_name: pelican-database
+    restart: always
+    env_file:
+      - /etc/komodo/secrets/pelican-db.env
+    environment:
+      TZ: America/Los_Angeles
+    volumes:
+      - /var/lib/pelican/database:/var/lib/postgresql
+
+  redis:
+    image: docker.io/library/redis@sha256:7f7d30b7fdd09467bac58198a1f166dd69789d348d4fe859cccb20e0cf287fbe
+    container_name: pelican-redis
+    restart: always
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - /var/lib/pelican/redis:/data
