@@ -1,0 +1,43 @@
+services:
+  minio:
+    # MinIO pulled its own images off Docker Hub and now requires auth on quay.io,
+    # so this is the last freely pullable snapshot (server build 2025.7.23).
+    image: docker.io/bitnamilegacy/minio@sha256:6dabb4a2088c9a79908de3bc05f4586c23ad2182c8908e7e3acbf61c1467fb20
+    container_name: crashy-minio
+    restart: always
+    environment:
+      # Root credentials come from the env_file below. They are also what crashy
+      # authenticates with, since MinIO has no separate admin API exposed here.
+      MINIO_REGION: us-west-2
+      MINIO_DEFAULT_BUCKETS: crashy-crashlogs
+      MINIO_API_PORT_NUMBER: "9000"
+    env_file:
+      - /etc/komodo/secrets/crashy.env
+    ports:
+      # S3 API. us-west.s3.orcachill.in on dora points here.
+      - "100.114.67.239:9000:9000"
+    volumes:
+      - /var/lib/crashy/minio:/data
+
+  crashy:
+    build:
+      # Checkout of github.com/orcachillin/Crashy, pulled and rebuilt by hand.
+      context: /var/lib/crashy/src
+    container_name: crashy
+    restart: always
+    depends_on:
+      - minio
+    env_file:
+      - /etc/komodo/secrets/crashy.env
+    environment:
+      # Internal endpoint: the browser never talks to S3, only the server does.
+      CRASHY_S3_ENDPOINT: http://minio:9000
+      CRASHY_S3_REGION: us-west-2
+      # Links handed back after an upload point here.
+      CRASHY_PUBLIC_URL: https://crashy.orcachill.in
+      TZ: America/Pacific
+    ports:
+      - "100.114.67.239:8081:80"
+    volumes:
+      # user.home is overridden to /data in the image, so cache/ and logs/ land here.
+      - /var/lib/crashy/data:/data
