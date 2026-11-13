@@ -14,7 +14,7 @@ The panel image runs as `www-data` and its built-in Caddy binds port 80, but Pod
 
 Wings runs on the host as `wings.service`, not as a container, because it needs to control a Docker engine.
 
-The panel node is `orkid`, served at `wings.orcachill.in:8095` through dora. Browsers open the console websocket against that same address, so the name must stay publicly resolvable even though Wings itself only listens on the NetBird address.
+The panel node is `orkid`, served at `orkid.console.orcachill.in:8095` through dora. Browsers open the console websocket against that same address, so the name must stay publicly resolvable even though Wings itself only listens on the NetBird address.
 
 Wings also serves SFTP on port 2022 (panel users use it to upload files) and binds game allocations on the public interface.
 

@@ -10,7 +10,7 @@ Komodo-managed services running on Orkid.
 - `forgejo`: Forgejo git hosting on the Orkid NetBird address, ports 3000 (web) and 2222 (ssh).
 - `forgejo-runner`: Actions runner for the Forgejo instance, shares the host docker socket.
 - `pelican`: Pelican game server panel on the Orkid NetBird address, port 8100, with its own PostgreSQL and Redis. Fronted by `panel.orcachill.in` on dora.
-- `pelican` also runs Wings as a host service (`wings.service`) against a second, dedicated Docker engine, so Podman keeps `/var/run/docker.sock`. The node answers at `wings.orcachill.in:8095` through dora and stores servers in `/var/lib/pelican/volumes`. See `pelican/README.md`.
+- `pelican` also runs Wings as a host service (`wings.service`) against a second, dedicated Docker engine, so Podman keeps `/var/run/docker.sock`. The node answers at `orkid.console.orcachill.in:8095` through dora and stores servers in `/var/lib/pelican/volumes`. See `pelican/README.md`.
 - `prowlarr`: Prowlarr on the Orkid NetBird address, port 9696, with an internal FlareSolverr sidecar.
 
 ## Runtime State
