@@ -22,7 +22,7 @@ services:
       - /var/lib/pelican/logs:/var/www/html/storage/logs
 
   database:
-    image: docker.io/library/postgres@sha256:1018733457011bf88d81db98cf43aac6d5150afc18787dbe204771fedf80ff95
+    image: docker.io/library/postgres:18.7-alpine@sha256:b6972e1115a4ff8eba5d7f7d19184926d1e16d7d1136ae1e1a7ebf286da0f015
     container_name: pelican-database
     restart: always
     env_file:
@@ -33,7 +33,7 @@ services:
       - /var/lib/pelican/database:/var/lib/postgresql
 
   redis:
-    image: docker.io/library/redis@sha256:7f7d30b7fdd09467bac58198a1f166dd69789d348d4fe859cccb20e0cf287fbe
+    image: docker.io/library/redis:7.4-alpine@sha256:7f7d30b7fdd09467bac58198a1f166dd69789d348d4fe859cccb20e0cf287fbe
     container_name: pelican-redis
     restart: always
     command: ["redis-server", "--appendonly", "yes"]
