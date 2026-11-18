@@ -1,0 +1,18 @@
+# Every authenticated user gets full control of their own principal tree,
+# including collections nested under it. Replaces the built-in owner_only
+# backend, which refuses paths deeper than one level below the principal.
+
+[root]
+user: .+
+collection: ^$
+permissions: R
+
+[principal]
+user: .+
+collection: ^{user}$
+permissions: RW
+
+[owned]
+user: .+
+collection: ^{user}(/.*)?$
+permissions: RrWw
