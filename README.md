@@ -12,6 +12,7 @@ Komodo-managed services running on Orkid.
 - `forgejo-runner`: Actions runner for the Forgejo instance, shares the host docker socket.
 - `pelican`: Pelican game server panel on the Orkid NetBird address, port 8100, with its own PostgreSQL and Redis. Fronted by `panel.orcachill.in` on dora.
 - `pelican` also runs Wings as a host service (`wings.service`) against a second, dedicated Docker engine, so Podman keeps `/var/run/docker.sock`. The node answers at `orkid.console.orcachill.in:8095` through dora and stores servers in `/var/lib/pelican/volumes`. See `pelican/README.md`.
+- `ics-caldav-sync`: mirrors the Kronos ESS work schedule (ICS) into the `max/shifts` calendar on the local Radicale instance every 30 minutes. See `ics-caldav-sync/README.md`.
 - `prowlarr`: Prowlarr on the Orkid NetBird address, port 9696, with an internal FlareSolverr sidecar.
 
 ## Runtime State
@@ -38,5 +39,6 @@ Runtime data and secrets are deliberately kept outside this repository:
 - Crashy source checkout: `/var/lib/crashy/src`
 - Crashy credentials: `/etc/komodo/secrets/crashy.env`
 - Forgejo data: `/var/lib/forgejo`
+- ICS to CalDAV sync environment (Kronos URL and Radicale credentials): `/etc/komodo/secrets/ics-caldav-sync.env`
 
 The AIOStreams environment file must be mode `600` and owned by root. Public ports are bound only to Orkid's NetBird address.
