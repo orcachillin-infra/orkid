@@ -1,14 +1,23 @@
 services:
+  # Caddy-based frontend. TLS terminates on Dora's caddy, so this only serves HTTP on
+  # Orkid's NetBird address and Dora's webmail.orcachill.in site proxies it.
   frontend:
-    image: ghcr.io/maathimself/mailflow-frontend:2.7.0
+    image: ghcr.io/maathimself/mailflow-frontend:4.4.0@sha256:74be6c108479985214fe54ac30c14fabe64c7a80a54100f80ad2b89b45fa6f43
     restart: always
     ports:
       - "100.114.67.239:3780:80"
+    environment:
+      TLS_MODE: "off"
+      NGINX_TLS: "off"
+    volumes:
+      - ./certs:/etc/mailflow/certs
+      - caddy_data:/data
+      - caddy_config:/config
     depends_on:
       backend:
         condition: service_healthy
     healthcheck:
-      test: ["CMD-SHELL", "wget -qO/dev/null http://127.0.0.1:80/ || exit 1"]
+      test: ["CMD-SHELL", "wget -qO/dev/null http://127.0.0.1:2080/healthz || exit 1"]
       interval: 15s
       timeout: 5s
       retries: 3
@@ -17,22 +26,28 @@ services:
       - mailflow
 
   backend:
-    image: ghcr.io/maathimself/mailflow-backend:2.7.0
+    image: ghcr.io/maathimself/mailflow-backend:4.4.0@sha256:db540d4bc86da0de6e3c8fe86b0b0b79b42caeb245beb8231d7a4b4428306e5d
     restart: always
+    # Room for a send in flight to finish on a restart (the backend waits up to 25 s).
+    stop_grace_period: 30s
     env_file: .env
     environment:
       NODE_ENV: production
       PORT: 3000
+      APP_URL: https://webmail.orcachill.in
       FRONTEND_URL: https://webmail.orcachill.in
       DB_HOST: postgres
       DB_PORT: 5432
       DB_NAME: mailflow
       DB_USER: mailflow
-      REDIS_URL: redis://redis:6379
+      # Requests arrive as client -> Dora caddy -> this frontend -> backend.
+      TRUST_PROXY_HOPS: "2"
+      IMAGE_CACHE_DIR: /var/cache/mailflow/images
+      IMAGE_CACHE_MAX_MB: "512"
+    volumes:
+      - image_cache:/var/cache/mailflow/images
     depends_on:
       postgres:
-        condition: service_healthy
-      redis:
         condition: service_healthy
     healthcheck:
       test: ["CMD-SHELL", "wget -qO- http://localhost:3000/api/health || exit 1"]
@@ -44,7 +59,7 @@ services:
       - mailflow
 
   postgres:
-    image: docker.io/library/postgres:16-alpine
+    image: docker.io/library/postgres:16-alpine@sha256:81e77a4833487b8132fe4b00bedd39dc3f74b8641e387f19312a48f7de218c2e
     restart: always
     environment:
       POSTGRES_DB: mailflow
@@ -61,24 +76,11 @@ services:
     networks:
       - mailflow
 
-  redis:
-    image: docker.io/library/redis:7-alpine
-    restart: always
-    command: redis-server --save 60 1 --loglevel warning
-    volumes:
-      - redis_data:/data
-    healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
-      interval: 10s
-      timeout: 3s
-      retries: 5
-      start_period: 10s
-    networks:
-      - mailflow
-
 volumes:
   postgres_data:
-  redis_data:
+  image_cache:
+  caddy_data:
+  caddy_config:
 
 networks:
   mailflow:
