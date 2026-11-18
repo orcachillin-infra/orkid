@@ -1,6 +1,8 @@
 services:
   ics-caldav-sync:
-    image: docker.io/przemub/ics_caldav_sync@sha256:c69a43819aca5540791e9e88522c04964359874820c57c66a2c2b753d043ceca
+    build:
+      context: .
+    image: ics-caldav-sync:patched
     container_name: ics-caldav-sync
     restart: always
     env_file:
